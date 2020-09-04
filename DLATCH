@@ -1,0 +1,75 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x895ea18 .scope module, "DLATCH_tb" "DLATCH_tb" 2 5;
+ .timescale 0 0;
+v0x897f080_0 .var "D", 0 0;
+v0x897f100_0 .var "En", 0 0;
+v0x897f170_0 .net "Q_value", 0 0, L_0x897f350; 1 drivers
+S_0x894c9a0 .scope module, "dut" "DLATCH" 2 9, 3 4, S_0x895ea18;
+ .timescale 0 0;
+L_0x897f1e0 .functor AND 1, v0x897f100_0, L_0x897f270, C4<1>, C4<1>;
+L_0x897f270 .functor NOT 1, v0x897f080_0, C4<0>, C4<0>, C4<0>;
+L_0x897f318 .functor AND 1, v0x897f100_0, v0x897f080_0, C4<1>, C4<1>;
+L_0x897f350 .functor NOR 1, L_0x897f1e0, L_0x897f3f8, C4<0>, C4<0>;
+L_0x897f3f8 .functor NOR 1, L_0x897f318, L_0x897f350, C4<0>, C4<0>;
+v0x894ca20_0 .net "D", 0 0, v0x897f080_0; 1 drivers
+v0x897ee18_0 .net "En", 0 0, v0x897f100_0; 1 drivers
+v0x897ee78_0 .alias "Q", 0 0, v0x897f170_0;
+v0x897eed8_0 .net "Qbar", 0 0, L_0x897f3f8; 1 drivers
+v0x897ef40_0 .net *"_s0", 0 0, L_0x897f270; 1 drivers
+v0x897efa0_0 .net "andout_1", 0 0, L_0x897f1e0; 1 drivers
+v0x897f020_0 .net "andout_2", 0 0, L_0x897f318; 1 drivers
+    .scope S_0x895ea18;
+T_0 ;
+    %set/v v0x897f080_0, 0, 1;
+    %set/v v0x897f100_0, 0, 1;
+    %delay 3, 0;
+    %set/v v0x897f080_0, 1, 1;
+    %delay 5, 0;
+    %set/v v0x897f080_0, 0, 1;
+    %delay 3, 0;
+    %set/v v0x897f080_0, 1, 1;
+    %delay 20, 0;
+    %set/v v0x897f080_0, 0, 1;
+    %delay 5, 0;
+    %set/v v0x897f080_0, 1, 1;
+    %delay 3, 0;
+    %set/v v0x897f080_0, 0, 1;
+    %delay 2, 0;
+    %set/v v0x897f080_0, 1, 1;
+    %delay 20, 0;
+    %set/v v0x897f080_0, 0, 1;
+    %delay 10, 0;
+    %vpi_call 2 32 "$finish";
+    %end;
+    .thread T_0;
+    .scope S_0x895ea18;
+T_1 ;
+    %delay 5, 0;
+    %load/v 8, v0x897f100_0, 1;
+    %inv 8, 1;
+    %set/v v0x897f100_0, 8, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x895ea18;
+T_2 ;
+    %vpi_call 2 42 "$monitor", "simtime = %g, D = %b,En = %b, Q_value = %b", $time, v0x897f080_0, v0x897f100_0, v0x897f170_0;
+    %end;
+    .thread T_2;
+    .scope S_0x895ea18;
+T_3 ;
+    %vpi_call 2 47 "$display", "\007";
+    %vpi_call 2 48 "$dumpfile", "DLATCH.vcd";
+    %vpi_call 2 49 "$dumpvars", 1'sb0, S_0x894c9a0;
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "DLATCH_tb.v";
+    "DLATCH.v";
